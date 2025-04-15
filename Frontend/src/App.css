@@ -1,0 +1,123 @@
+/* Reset and Global Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Arial", sans-serif;
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  background-color: #121212;
+  color: #ffffff;
+}
+
+/* Main Layout */
+main {
+  height: 100%;
+  width: 100%;
+  padding: 2rem;
+  display: flex;
+  gap: 1rem;
+}
+
+/* Left and Right Panels */
+main .left, main .right {
+  height: 100%;
+  flex-basis: 50%;
+  border-radius: 0.7rem;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s ease-in-out;
+}
+
+main .left {
+  background-color: #1a1a1a;
+  position: relative;
+  padding: 1rem;
+}
+
+main .left:hover, main .right:hover {
+  transform: scale(1.02);
+}
+
+/* Code Styling */
+.left .code,
+.code pre,
+.code pre code {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  border-radius: 0.7rem;
+  background-color: #0c0c0c;
+  padding: 1rem;
+  font-size: 1rem;
+  color: #ddd;
+  overflow: auto;
+}
+
+/* Review Button */
+main .left .review {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  background-color: #4a90e2;
+  color: #ffffff;
+  padding: 0.7rem 2rem;
+  font-weight: bold;
+  cursor: pointer;
+  user-select: none;
+  border-radius: 0.7rem;
+  text-transform: uppercase;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+main .left .review:hover {
+  background-color: #3572b0;
+  transform: translateY(-3px);
+}
+
+/* Right Panel */
+main .right {
+  background-color: #2e2e2e;
+  padding: 1.5rem;
+  font-size: 0.9rem;
+  overflow: auto;
+  border-radius: 0.7rem;
+  line-height: 1.6;
+}
+
+/* Custom Scrollbar */
+main .right::-webkit-scrollbar {
+  width: 8px;
+}
+
+main .right::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+main .right::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Loading Spinner */
+.spinner {
+  border: 4px solid rgba(255, 255, 255, 0.1);
+  border-top: 4px solid #ffffff;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  animation: spin 1s linear infinite;
+  display: inline-block;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

@@ -1,0 +1,72 @@
+import { useState, useEffect } from "react";
+import "prismjs/themes/prism-tomorrow.css";
+import prism from "prismjs";
+import ReactSimpleCodeEditor from "react-simple-code-editor";
+import Markdown from "react-markdown";
+import rehypeHighlight from "rehype-highlight";
+import "highlight.js/styles/github-dark.css";
+
+import axios from "axios";
+import "./App.css";
+
+function App() {
+  const [code, setCode] = useState(`function sum() {
+  return 1 + 1;
+}`);
+  const [review, setReview] = useState(``);
+  const [loading, setLoading] = useState(false); // Add loading state
+
+  useEffect(() => {
+    prism.highlightAll();
+  }, []);
+
+  async function reviewCode() {
+    setLoading(true); // Start loading
+    try {
+      const response = await axios.post("http://localhost:3000/ai/get-review", {
+        code,
+      });
+      setReview(response.data);
+    } catch (error) {
+      console.error("Error fetching review:", error);
+    } finally {
+      setLoading(false); // Stop loading
+    }
+  }
+
+  return (
+    <>
+      <main>
+        <div className="left">
+          <div className="code">
+            <ReactSimpleCodeEditor
+              value={code}
+              onValueChange={(code) => setCode(code)}
+              highlight={(code) =>
+                prism.highlight(code, prism.languages.javascript, "javascript")
+              }
+              padding={10}
+              style={{
+                fontFamily: '"Fira code", "Fira Mono", monospace',
+                fontSize: 12,
+                border: "1px solid #000",
+                borderRadius: "5px",
+                width: "100%",
+                height: "100%",
+              }}
+            />
+          </div>
+          <div onClick={reviewCode} className="review">
+            {loading ? <div className="spinner"></div> : "Review"}
+          </div>
+        </div>
+
+        <div className="right">
+          <Markdown rehypePlugins={[rehypeHighlight]}>{review}</Markdown>
+        </div>
+      </main>
+    </>
+  );
+}
+
+export default App;
